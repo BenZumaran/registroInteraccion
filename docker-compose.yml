@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  registro_interaccion:
+    build: CRM_Registro_Interaccion
+    mem_limit: 512m
+    ports:
+      - "8090:8090"
+    environment:
+      DB_URL: jdbc:mysql://reg_interaccion:3306/bd_registro_interaccion_usuario?createDatabaseIfNotExist=true&serverTimezone=UTC
+      DB_USER_NAME: root
+      DB_PASSWORD: root
+    restart: always
+    depends_on:
+      reg_interaccion:
+          condition: service_healthy
+  reg_interaccion:
+    image: mysql:8.0.33
+    ports:
+      - "3307:3306"
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_PASSWORD: root
+        MYSQL_DATABASE: bd_registro_interaccion_usuario
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin" , "ping" , "-h" , "localhost"]
+      interval: 10s
+      retries: 10
