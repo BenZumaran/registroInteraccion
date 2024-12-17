@@ -1,5 +1,0 @@
-FROM openjdk:17-jdk-slim
-ARG JAR_FILE=target/CRM_Registro_Interaccion-0.0.1.jar
-COPY ${JAR_FILE} CRM_Registro_Interaccion.jar
-EXPOSE 8090
-ENTRYPOINT [ "java", "-jar", "CRM_Registro_Interaccion.jar" ]
